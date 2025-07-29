@@ -1,20 +1,29 @@
-import { useGetCallOptionQuery } from "./features/api";
+import { useState } from "react";
+import InputBar from "./components/InputBar.tsx";
+import OptionsPrices from "./components/OptionsPrices.tsx";
 
 export default function App() {
-  const { data, error, isLoading } = useGetCallOptionQuery({
+  const [inputs, setInputs] = useState({
     S: 100,
-    K: 90,
+    K: 100,
     T: 1,
     r: 0.05,
     sigma: 0.3,
   });
 
+  const handleInputChange = (field: string, value: string) => {
+    setInputs((prev) => ({
+      ...prev,
+      [field]: parseFloat(value) || 0, // Convert input to a number
+    }));
+  };
+
   return (
-    <div>
-      <h1>Call Option Price</h1>
-      {isLoading && <p>Loading...</p>}
-      {error && <p>Error fetching data</p>}
-      {data && <p>Call Price: {data.call_price}</p>}
-    </div>
+      <>
+        <div style={{display: "flex"}}>
+          <InputBar inputs={inputs} onInputChange={handleInputChange}/>
+          <OptionsPrices inputs={inputs}/>
+        </div>
+      </>
   );
 }
