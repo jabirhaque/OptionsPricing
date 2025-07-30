@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import { useGetCallOptionQuery, useGetPutOptionQuery } from "../features/api";
+import Heatmap from "./Heatmap";
 
 export default function OptionsPrices({ inputs }: { inputs: any }) {
   const { data: callData, error: callError, isLoading: isCallLoading } = useGetCallOptionQuery(inputs);
@@ -46,6 +47,17 @@ export default function OptionsPrices({ inputs }: { inputs: any }) {
           {putData && <Typography variant="h6">Put Price: ${putData.put_price.toFixed(2)}</Typography>}
         </div>
       </div>
+      {/* Heatmap placed under the options boxes */}
+        <div style={{marginTop: "20px", width: "100%"}}>
+            <div style={{display: "flex", justifyContent: "center", marginBottom: "10px"}}>
+                <Typography variant="h6">Call Price Heatmap</Typography>
+            </div>
+            <Heatmap xmin={1.5} xmax={24} ymin={1} ymax={12.5}/>
+            <div style={{display: "flex", justifyContent: "center", marginBottom: "10px"}}>
+                <Typography variant="h6">Put Price Heatmap</Typography>
+            </div>
+            <Heatmap xmin={1} xmax={24} ymin={1} ymax={12}/>
+        </div>
     </div>
   );
 }
