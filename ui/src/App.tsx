@@ -1,7 +1,6 @@
 import { useState } from "react";
 import InputBar from "./components/InputBar.tsx";
 import OptionsPrices from "./components/OptionsPrices.tsx";
-import Heatmap from "./components/Heatmap.tsx";
 
 export default function App() {
   const [inputs, setInputs] = useState({
@@ -10,6 +9,10 @@ export default function App() {
     T: 1,
     r: 0.05,
     sigma: 0.2,
+    minSpotPrice: 94,
+    maxSpotPrice: 105,
+    minVolatility: 0.14,
+    maxVolatility: 0.25,
   });
 
   const handleInputChange = (field: string, value: string) => {
