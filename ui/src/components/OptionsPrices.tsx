@@ -21,7 +21,7 @@ export default function OptionsPrices({ inputs }: { inputs: any }) {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "lightgreen", // Light green for call option
+            backgroundColor: "lightgreen",
           }}
         >
           <Typography variant="h6">Call Option</Typography>
@@ -38,7 +38,7 @@ export default function OptionsPrices({ inputs }: { inputs: any }) {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "lightcoral", // Light red for put option
+            backgroundColor: "lightcoral",
           }}
         >
           <Typography variant="h6">Put Option</Typography>
@@ -53,21 +53,29 @@ export default function OptionsPrices({ inputs }: { inputs: any }) {
           <Typography variant="h6">Call Price Heatmap</Typography>
         </div>
         <Heatmap
+          strikePrice={inputs.K}
+          time={inputs.T}
+          rate={inputs.r}
           xmin={inputs.minSpotPrice}
           xmax={inputs.maxSpotPrice}
           ymin={inputs.minVolatility}
           ymax={inputs.maxVolatility}
           name={"Call Price"}
+          isCall={true}
         />
         <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
           <Typography variant="h6">Put Price Heatmap</Typography>
         </div>
         <Heatmap
+          strikePrice={inputs.K}
+          time={inputs.T}
+          rate={inputs.r}
           xmin={inputs.minSpotPrice}
           xmax={inputs.maxSpotPrice}
           ymin={inputs.minVolatility}
           ymax={inputs.maxVolatility}
           name={"Put Price"}
+          isCall={false}
         />
       </div>
     </div>

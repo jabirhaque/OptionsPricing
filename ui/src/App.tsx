@@ -18,7 +18,7 @@ export default function App() {
   const handleInputChange = (field: string, value: string) => {
     setInputs((prev) => ({
       ...prev,
-      [field]: parseFloat(value) || 0, // Convert input to a number
+      [field]: parseFloat(value) || 0,
     }));
   };
 
