@@ -22,12 +22,14 @@ export default function OptionsPrices({ inputs }: { inputs: any }) {
             justifyContent: "center",
             alignItems: "center",
             backgroundColor: "lightgreen",
+            color: "black",
+            borderRadius: "10px",
           }}
         >
-          <Typography variant="h6">Call Option</Typography>
-          {isCallLoading && <p>Loading...</p>}
-          {callError && <p>Error fetching call option data</p>}
-          {callData && <Typography variant="h6">Call Price: ${callData.call_price.toFixed(2)}</Typography>}
+          <Typography variant="h6" style={{ color: "black" }}>Call Option</Typography>
+          {isCallLoading && <p style={{ color: "black" }}>Loading...</p>}
+          {callError && <p style={{ color: "black" }}>Error fetching call option data</p>}
+          {callData && <Typography variant="h6" style={{ color: "black" }}>Call Price: ${callData.call_price.toFixed(2)}</Typography>}
         </div>
         <div
           style={{
@@ -39,12 +41,14 @@ export default function OptionsPrices({ inputs }: { inputs: any }) {
             justifyContent: "center",
             alignItems: "center",
             backgroundColor: "lightcoral",
+            color: "black",
+            borderRadius: "10px",
           }}
         >
-          <Typography variant="h6">Put Option</Typography>
-          {isPutLoading && <p>Loading...</p>}
-          {putError && <p>Error fetching put option data</p>}
-          {putData && <Typography variant="h6">Put Price: ${putData.put_price.toFixed(2)}</Typography>}
+          <Typography variant="h6" style={{ color: "black" }}>Put Option</Typography>
+          {isPutLoading && <p style={{ color: "black" }}>Loading...</p>}
+          {putError && <p style={{ color: "black" }}>Error fetching put option data</p>}
+          {putData && <Typography variant="h6" style={{ color: "black" }}>Put Price: ${putData.put_price.toFixed(2)}</Typography>}
         </div>
       </div>
       {/* Heatmap placed under the options boxes */}
