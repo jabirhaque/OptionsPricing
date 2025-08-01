@@ -1,10 +1,28 @@
 import { Box, List, ListItem, TextField, Typography } from "@mui/material";
+import { useState } from "react";
+
+const areInputsValid = (inputs: any) => {
+  const { S, K, r, sigma, minSpotPrice, maxSpotPrice, minVolatility, maxVolatility } = inputs;
+  return S > 0 && K > 0 && r > 0 && sigma > 0 && minSpotPrice > 0 && maxSpotPrice > 0 && minVolatility > 0 && maxVolatility > 0;
+};
 
 export default function InputBar({ inputs, onInputChange }: { inputs: any; onInputChange: (field: string, value: string) => void }) {
+  const [localInputs, setLocalInputs] = useState(inputs);
+
+  const handleInputChange = (field: string, value: string) => {
+    const updatedInputs = { ...localInputs, [field]: value === "" ? "" : parseFloat(value) || 0 };
+    setLocalInputs(updatedInputs);
+
+    // Trigger API call only if all fields (except T) are valid
+    if (areInputsValid(updatedInputs)) {
+      onInputChange(field, value);
+    }
+  };
+
   return (
     <Box
       sx={{
-        width: "15%",
+        width: "20%",
         height: "100%",
         padding: 2,
         textAlign: "left",
@@ -21,8 +39,8 @@ export default function InputBar({ inputs, onInputChange }: { inputs: any; onInp
             variant="outlined"
             fullWidth
             type="number"
-            value={inputs.S}
-            onChange={(e) => onInputChange("S", e.target.value)}
+            value={localInputs.S}
+            onChange={(e) => handleInputChange("S", e.target.value)}
           />
         </ListItem>
         <ListItem>
@@ -31,8 +49,8 @@ export default function InputBar({ inputs, onInputChange }: { inputs: any; onInp
             variant="outlined"
             fullWidth
             type="number"
-            value={inputs.K}
-            onChange={(e) => onInputChange("K", e.target.value)}
+            value={localInputs.K}
+            onChange={(e) => handleInputChange("K", e.target.value)}
           />
         </ListItem>
         <ListItem>
@@ -41,8 +59,8 @@ export default function InputBar({ inputs, onInputChange }: { inputs: any; onInp
             variant="outlined"
             fullWidth
             type="number"
-            value={inputs.T}
-            onChange={(e) => onInputChange("T", e.target.value)}
+            value={localInputs.T}
+            onChange={(e) => handleInputChange("T", e.target.value)}
           />
         </ListItem>
         <ListItem>
@@ -51,8 +69,8 @@ export default function InputBar({ inputs, onInputChange }: { inputs: any; onInp
             variant="outlined"
             fullWidth
             type="number"
-            value={inputs.r}
-            onChange={(e) => onInputChange("r", e.target.value)}
+            value={localInputs.r}
+            onChange={(e) => handleInputChange("r", e.target.value)}
           />
         </ListItem>
         <ListItem>
@@ -61,8 +79,8 @@ export default function InputBar({ inputs, onInputChange }: { inputs: any; onInp
             variant="outlined"
             fullWidth
             type="number"
-            value={inputs.sigma}
-            onChange={(e) => onInputChange("sigma", e.target.value)}
+            value={localInputs.sigma}
+            onChange={(e) => handleInputChange("sigma", e.target.value)}
           />
         </ListItem>
       </List>
@@ -77,8 +95,8 @@ export default function InputBar({ inputs, onInputChange }: { inputs: any; onInp
             variant="outlined"
             fullWidth
             type="number"
-            value={inputs.minSpotPrice}
-            onChange={(e) => onInputChange("minSpotPrice", e.target.value)}
+            value={localInputs.minSpotPrice}
+            onChange={(e) => handleInputChange("minSpotPrice", e.target.value)}
           />
         </ListItem>
         <ListItem>
@@ -87,8 +105,8 @@ export default function InputBar({ inputs, onInputChange }: { inputs: any; onInp
             variant="outlined"
             fullWidth
             type="number"
-            value={inputs.maxSpotPrice}
-            onChange={(e) => onInputChange("maxSpotPrice", e.target.value)}
+            value={localInputs.maxSpotPrice}
+            onChange={(e) => handleInputChange("maxSpotPrice", e.target.value)}
           />
         </ListItem>
         <ListItem>
@@ -97,8 +115,8 @@ export default function InputBar({ inputs, onInputChange }: { inputs: any; onInp
             variant="outlined"
             fullWidth
             type="number"
-            value={inputs.minVolatility}
-            onChange={(e) => onInputChange("minVolatility", e.target.value)}
+            value={localInputs.minVolatility}
+            onChange={(e) => handleInputChange("minVolatility", e.target.value)}
           />
         </ListItem>
         <ListItem>
@@ -107,8 +125,8 @@ export default function InputBar({ inputs, onInputChange }: { inputs: any; onInp
             variant="outlined"
             fullWidth
             type="number"
-            value={inputs.maxVolatility}
-            onChange={(e) => onInputChange("maxVolatility", e.target.value)}
+            value={localInputs.maxVolatility}
+            onChange={(e) => handleInputChange("maxVolatility", e.target.value)}
           />
         </ListItem>
       </List>
