@@ -7,7 +7,7 @@ app = FastAPI()
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "https://options-pricing-git-deployment-jabirs-projects-d8dfaf64.vercel.app/"],
+    allow_origins=["http://localhost:5173", "https://options-pricing-git-deployment-jabirs-projects-d8dfaf64.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
