@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const api = createApi({
     reducerPath: "api",
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api/" }),
+    baseQuery: fetchBaseQuery({ baseUrl: "https://optionspricing.fly.dev/api/" }),
     endpoints: (builder) => ({
         getCallOption: builder.query<{ call_price: number }, { S: number; K: number; T: number; r: number; sigma: number }>({
             query: ({ S, K, T, r, sigma }) =>
