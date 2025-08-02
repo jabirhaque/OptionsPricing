@@ -27,10 +27,15 @@ const Heatmap = ({ strikePrice, time, rate, xmin, xmax, ymin, ymax, name, isCall
       });
 
   const values = matrixData
-    ? matrixData[isCall ? 'call_option_matrix' : 'put_option_matrix'].flatMap((row, rowIndex) =>
-        row.map((value, colIndex) => [rowIndex, colIndex, parseFloat(value.toFixed(2))])
-      )
-    : [];
+  ? (isCall && 'call_option_matrix' in matrixData
+      ? matrixData.call_option_matrix
+      : 'put_option_matrix' in matrixData
+      ? matrixData.put_option_matrix
+      : []
+    ).flatMap((row, rowIndex) =>
+      row.map((value, colIndex) => [rowIndex, colIndex, parseFloat(value.toFixed(2))])
+    )
+  : [];
 
   const minValue = values.length > 0 ? Math.min(...values.map(item => item[2])) : 0;
   const maxValue = values.length > 0 ? Math.max(...values.map(item => item[2])) : 10;
