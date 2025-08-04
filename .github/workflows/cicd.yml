@@ -44,7 +44,7 @@ jobs:
   deploy-backend:
     name: Deploy Backend to Fly.io
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    #if: github.ref == 'refs/heads/main'
     needs: build-test-backend
     steps:
       - uses: actions/checkout@v4
