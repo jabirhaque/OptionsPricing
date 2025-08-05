@@ -59,4 +59,14 @@ async def put_option_matrix(
     )
     return {"put_option_matrix": matrix}
 
+@api_router.get("/delta-call")
+async def call_price_array(S: float, K: float, T: float, r: float, sigma: float):
+    spot_prices, call_prices = generate_call_price_array(S, K, T, r, sigma)
+    return {"spot_prices": spot_prices.tolist(), "call_prices": call_prices}
+
+@api_router.get("/delta-put")
+async def put_price_array(S: float, K: float, T: float, r: float, sigma: float):
+    spot_prices, put_prices = generate_put_price_array(S, K, T, r, sigma)
+    return {"spot_prices": spot_prices.tolist(), "put_prices": put_prices}
+
 app.include_router(api_router)

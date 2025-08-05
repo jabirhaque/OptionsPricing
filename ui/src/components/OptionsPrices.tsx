@@ -1,6 +1,7 @@
 import { Typography } from "@mui/material";
 import { useGetCallOptionQuery, useGetPutOptionQuery } from "../features/api";
 import Heatmap from "./Heatmap";
+import Delta from "./Delta.tsx";
 
 export default function OptionsPrices({ inputs }: { inputs: any }) {
   const { data: callData, error: callError, isLoading: isCallLoading } = useGetCallOptionQuery(inputs);
@@ -67,8 +68,12 @@ export default function OptionsPrices({ inputs }: { inputs: any }) {
           name={"Call Price"}
           isCall={true}
         />
-        <div style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
-          <Typography variant="h6">Put Price Heatmap</Typography>
+        <div style={{display: "flex", gap: "10px"}}>
+            <Delta S={inputs.S} K={inputs.K} T={inputs.T} r={inputs.r} vol={inputs.sigma} isCall={true}/>
+            <Delta S={inputs.S} K={inputs.K} T={inputs.T} r={inputs.r} vol={inputs.sigma} isCall={false}/>
+        </div>
+        <div style={{display: "flex", justifyContent: "center", marginBottom: "10px" }}>
+        <Typography variant="h6">Put Price Heatmap</Typography>
         </div>
         <Heatmap
           strikePrice={inputs.K}
@@ -84,4 +89,4 @@ export default function OptionsPrices({ inputs }: { inputs: any }) {
       </div>
     </div>
   );
-}
+}//add more greeks on line 72 div

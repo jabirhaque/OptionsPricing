@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const api = createApi({
     reducerPath: "api",
-    baseQuery: fetchBaseQuery({ baseUrl: "https://optionspricing.fly.dev/api/" }),
+    //baseQuery: fetchBaseQuery({ baseUrl: "https://optionspricing.fly.dev/api/" }),
+    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api/" }),
     endpoints: (builder) => ({
         getCallOption: builder.query<{ call_price: number }, { S: number; K: number; T: number; r: number; sigma: number }>({
             query: ({ S, K, T, r, sigma }) =>
@@ -26,6 +27,20 @@ export const api = createApi({
             query: ({ K, T, r, min_spot_price, max_spot_price, min_volatility, max_volatility }) =>
                 `put-option-matrix?K=${K}&T=${T}&r=${r}&min_spot_price=${min_spot_price}&max_spot_price=${max_spot_price}&min_volatility=${min_volatility}&max_volatility=${max_volatility}`,
         }),
+        getDeltaCall: builder.query<
+            { spot_prices: number[]; call_prices: number[] },
+            { S: number; K: number; T: number; r: number; sigma: number }
+        >({
+            query: ({ S, K, T, r, sigma }) =>
+                `delta-call?S=${S}&K=${K}&T=${T}&r=${r}&sigma=${sigma}`,
+        }),
+        getDeltaPut: builder.query<
+            { spot_prices: number[]; put_prices: number[] },
+            { S: number; K: number; T: number; r: number; sigma: number }
+        >({
+            query: ({ S, K, T, r, sigma }) =>
+                `delta-put?S=${S}&K=${K}&T=${T}&r=${r}&sigma=${sigma}`,
+        }),
     }),
 });
 
@@ -34,4 +49,6 @@ export const {
     useGetPutOptionQuery,
     useGetCallOptionMatrixQuery,
     useGetPutOptionMatrixQuery,
+    useGetDeltaCallQuery,
+    useGetDeltaPutQuery
 } = api;
