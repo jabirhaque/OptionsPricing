@@ -42,13 +42,21 @@ def calculate_put_option_matrix(K, T, r, min_spot_price, max_spot_price, min_vol
 
     return put_option_matrix
 
+def call_deltas(S, K, T, r, sigma):
+    return norm.cdf((math.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * math.sqrt(T)))
+
+def put_deltas(S, K, T, r, sigma):
+    return norm.cdf((math.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * math.sqrt(T))) - 1
+
 
 def generate_call_price_array(S, K, T, r, sigma):
     spot_prices = np.linspace(0.5 * S, 1.5 * S, 100)
     call_prices = [black_scholes_call(spot_price, K, T, r, sigma) for spot_price in spot_prices]
-    return spot_prices, call_prices
+    deltas = [call_deltas(spot_price, K, T, r, sigma) for spot_price in spot_prices]
+    return spot_prices, call_prices, deltas
 
 def generate_put_price_array(S, K, T, r, sigma):
     spot_prices = np.linspace(0.5 * S, 1.5 * S, 100)
     put_prices = [black_scholes_put(spot_price, K, T, r, sigma) for spot_price in spot_prices]
-    return spot_prices, put_prices
+    deltas = [put_deltas(spot_price, K, T, r, sigma) for spot_price in spot_prices]
+    return spot_prices, put_prices, deltas

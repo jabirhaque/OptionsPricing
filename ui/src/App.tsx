@@ -15,10 +15,10 @@ export default function App() {
 
   const [inputs, setInputs] = useState({
     S: 100,
-    K: 100,
-    T: 1,
-    r: 0.05,
-    sigma: 0.2,
+    K: 80,
+    T: 2,
+    r: 0.03,
+    sigma: 0.25,
     minSpotPrice: 94,
     maxSpotPrice: 105,
     minVolatility: 0.14,

@@ -28,14 +28,14 @@ export const api = createApi({
                 `put-option-matrix?K=${K}&T=${T}&r=${r}&min_spot_price=${min_spot_price}&max_spot_price=${max_spot_price}&min_volatility=${min_volatility}&max_volatility=${max_volatility}`,
         }),
         getDeltaCall: builder.query<
-            { spot_prices: number[]; call_prices: number[] },
+            { spot_prices: number[]; call_prices: number[]; call_deltas: number[]},
             { S: number; K: number; T: number; r: number; sigma: number }
         >({
             query: ({ S, K, T, r, sigma }) =>
                 `delta-call?S=${S}&K=${K}&T=${T}&r=${r}&sigma=${sigma}`,
         }),
         getDeltaPut: builder.query<
-            { spot_prices: number[]; put_prices: number[] },
+            { spot_prices: number[]; put_prices: number[]; put_deltas:number[]},
             { S: number; K: number; T: number; r: number; sigma: number }
         >({
             query: ({ S, K, T, r, sigma }) =>
