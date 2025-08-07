@@ -4,11 +4,11 @@ This project is an **Options Pricing Tool** designed to price, compare and visua
 ## Features
 - **Options Pricing**: Calculates and displays call and put option prices based on user inputs
 - **Heatmap Visualisation**: Provides heatmaps to visualise option prices for real-time sensitivity analysis
-- **User Input Management**: Allows users to input and adjust variables such as spot price, strike price, volatility and more
+- **Greeks calculation and visualisations**: Greeks such as Delta, Gamma, Theta, Vega, and Rho are calculated and visualized for better insights into option sensitivities
 
 ## Planned Features
 - **Support for Various Pricing Models**: Integrate multiple option pricing models such as Black-Scholes, Binomial and Monte Carlo simulations
-- **Advanced Visualisations**:Include additional charts and graphs for deeper analysis of option pricing trends
+- **Advanced Visualisations**: Include additional charts and graphs for deeper analysis of option pricing trends
 
 ## Technology Stack
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
