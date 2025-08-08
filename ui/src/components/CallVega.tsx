@@ -17,7 +17,7 @@ export default function CallVega({ S, K, T, r, vol }: { S: number; K: number; T:
     trigger: "axis",
     formatter: (params: any) => {
       const [point] = params;
-      const sigma = parseFloat(point.axisValue).toFixed(2);
+      const sigma = parseFloat(point.axisValue).toFixed(4);
       const optionValue = parseFloat(point.data).toFixed(2);
       const vega = data.call_vegas[point.dataIndex].toFixed(4);
       return `Volatility: ${sigma}<br>Call Price: ${optionValue}<br>Vega: ${vega}`;

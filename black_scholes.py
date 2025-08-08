@@ -140,3 +140,14 @@ def generate_put_gamma_array(S, K, T, r, sigma):
     deltas = [put_deltas(spot_price, K, T, r, sigma) for spot_price in spot_prices]
     gammas = [gamma(spot_price, K, T, r, sigma) for spot_price in spot_prices]
     return spot_prices, deltas, gammas
+
+def vomma(S, K, T, r, sigma):
+    d1 = (math.log(S / K) + (r + 0.5 * sigma**2) * T) / (sigma * math.sqrt(T))
+    d2 = d1 - sigma * math.sqrt(T)
+    return S * norm.pdf(d1) * math.sqrt(T) * d1 * d2 / sigma
+
+def generate_vomma_array(S, K, T, r, sigma):
+    sigmas = np.linspace(0.5 * sigma, 1.5 * sigma, 100)
+    vegas = [vega(S, K, T, r, s) for s in sigmas]
+    vommas = [vomma(S, K, T, r, s) for s in sigmas]
+    return sigmas, vegas, vommas

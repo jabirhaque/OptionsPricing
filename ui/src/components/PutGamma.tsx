@@ -18,7 +18,7 @@ export default function PutGamma({ S, K, T, r, vol }: { S: number; K: number; T:
     formatter: (params: any) => {
       const [point] = params;
       const spotPrice = parseFloat(point.axisValue).toFixed(2);
-      const delta = parseFloat(point.data).toFixed(2);
+      const delta = parseFloat(point.data).toFixed(4);
       const gamma = data.put_gammas[point.dataIndex].toFixed(4);
       return `Spot Price: ${spotPrice}<br>Delta: ${delta}<br>Gamma: ${gamma}`;
     },
