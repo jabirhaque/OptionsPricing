@@ -83,8 +83,8 @@ async def call_vega_array(S: float, K: float, T: float, r: float, sigma: float):
     sigmas, call_prices, vegas = generate_call_vega_array(S, K, T, r, sigma)
     return {"sigmas": sigmas.tolist(), "call_prices": call_prices, "call_vegas": vegas}
 
-@api_router.get("/theta-put")
+@api_router.get("/vega-put")
 async def put_vega_array(S: float, K: float, T: float, r: float, sigma: float):
     sigmas, put_prices, vegas = generate_put_vega_array(S, K, T, r, sigma)
-    return {"sigmas": sigmas.tolist(), "put_prices": put_prices, "call_vegas": vegas}
+    return {"sigmas": sigmas.tolist(), "put_prices": put_prices, "put_vegas": vegas}
 app.include_router(api_router)
