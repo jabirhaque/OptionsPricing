@@ -78,4 +78,13 @@ async def put_theta_array(S: float, K: float, T: float, r: float, sigma: float):
     times, put_prices, thetas = generate_put_theta_array(S, K, T, r, sigma)
     return {"times": times.tolist(), "put_prices": put_prices, "put_thetas": thetas}
 
+@api_router.get("/vega-call")
+async def call_vega_array(S: float, K: float, T: float, r: float, sigma: float):
+    sigmas, call_prices, vegas = generate_call_vega_array(S, K, T, r, sigma)
+    return {"sigmas": sigmas.tolist(), "call_prices": call_prices, "call_vegas": vegas}
+
+@api_router.get("/theta-put")
+async def put_vega_array(S: float, K: float, T: float, r: float, sigma: float):
+    sigmas, put_prices, vegas = generate_put_vega_array(S, K, T, r, sigma)
+    return {"sigmas": sigmas.tolist(), "put_prices": put_prices, "call_vegas": vegas}
 app.include_router(api_router)

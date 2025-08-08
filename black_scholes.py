@@ -87,3 +87,19 @@ def generate_put_theta_array(S, K, T, r, sigma):
     call_prices = [black_scholes_call(S, K, time, r, sigma) for time in times]
     thetas = [put_theta(S, K, time, r, sigma) for time in times]
     return times, call_prices, thetas
+
+def vega(S, K, T, r, sigma):
+    d1 = (math.log(S / K) + (r + 0.5 * sigma**2) * T) / (sigma * math.sqrt(T))
+    return S * norm.pdf(d1) * math.sqrt(T) / 100
+
+def generate_call_vega_array(S, K, T, r, sigma):
+    sigmas = np.linspace(0.5 * sigma, 1.5 * sigma, 100)
+    call_prices = [black_scholes_call(S, K, T, r, s) for s in sigmas]
+    vegas = [vega(S, K, T, r, s) for s in sigmas]
+    return sigmas, call_prices, vegas
+
+def generate_put_vega_array(S, K, T, r, sigma):
+    sigmas = np.linspace(0.5 * sigma, 1.5 * sigma, 100)
+    put_prices = [black_scholes_put(S, K, T, r, s) for s in sigmas]
+    vegas = [vega(S, K, T, r, s) for s in sigmas]
+    return sigmas, put_prices, vegas
