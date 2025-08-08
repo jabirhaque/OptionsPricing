@@ -124,3 +124,19 @@ def generate_put_rho_array(S, K, T, r, sigma):
     put_prices = [black_scholes_put(S, K, T, rate, sigma) for rate in rates]
     rhos = [put_rho(S, K, T, rate, sigma) for rate in rates]
     return rates, put_prices, rhos
+
+def gamma(S, K, T, r, sigma):
+    d1 = (math.log(S / K) + (r + 0.5 * sigma**2) * T) / (sigma * math.sqrt(T))
+    return norm.pdf(d1) / (S * sigma * math.sqrt(T))
+
+def generate_call_gamma_array(S, K, T, r, sigma):
+    spot_prices = np.linspace(0.5 * S, 1.5 * S, 100)
+    deltas = [call_deltas(spot_price, K, T, r, sigma) for spot_price in spot_prices]
+    gammas = [gamma(spot_price, K, T, r, sigma) for spot_price in spot_prices]
+    return spot_prices, deltas, gammas
+
+def generate_put_gamma_array(S, K, T, r, sigma):
+    spot_prices = np.linspace(0.5 * S, 1.5 * S, 100)
+    deltas = [put_deltas(spot_price, K, T, r, sigma) for spot_price in spot_prices]
+    gammas = [gamma(spot_price, K, T, r, sigma) for spot_price in spot_prices]
+    return spot_prices, deltas, gammas

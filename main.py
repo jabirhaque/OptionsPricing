@@ -97,4 +97,14 @@ async def call_rho_array(S: float, K: float, T: float, r: float, sigma: float):
 async def put_rho_array(S: float, K: float, T: float, r: float, sigma: float):
     rates, put_prices, rhos = generate_put_rho_array(S, K, T, r, sigma)
     return {"rates": rates.tolist(), "put_prices": put_prices, "put_rhos": rhos}
+
+@api_router.get("/gamma-call")
+async def call_gamma_array(S: float, K: float, T: float, r: float, sigma: float):
+    spot_prices, deltas, gammas = generate_call_gamma_array(S, K, T, r, sigma)
+    return {"spot_prices": spot_prices.tolist(), "call_deltas": deltas, "call_gammas": gammas}
+
+@api_router.get("/gamma-put")
+async def put_gamma_array(S: float, K: float, T: float, r: float, sigma: float):
+    spot_prices, deltas, gammas = generate_put_gamma_array(S, K, T, r, sigma)
+    return {"spot_prices": spot_prices.tolist(), "put_deltas": deltas, "put_gammas": gammas}
 app.include_router(api_router)
