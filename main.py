@@ -59,13 +59,23 @@ async def put_option_matrix(
     return {"put_option_matrix": matrix}
 
 @api_router.get("/delta-call")
-async def call_price_array(S: float, K: float, T: float, r: float, sigma: float):
-    spot_prices, call_prices, deltas = generate_call_price_array(S, K, T, r, sigma)
+async def call_delta_array(S: float, K: float, T: float, r: float, sigma: float):
+    spot_prices, call_prices, deltas = generate_call_delta_array(S, K, T, r, sigma)
     return {"spot_prices": spot_prices.tolist(), "call_prices": call_prices, "call_deltas": deltas}
 
 @api_router.get("/delta-put")
-async def put_price_array(S: float, K: float, T: float, r: float, sigma: float):
-    spot_prices, put_prices, deltas = generate_put_price_array(S, K, T, r, sigma)
+async def put_delta_array(S: float, K: float, T: float, r: float, sigma: float):
+    spot_prices, put_prices, deltas = generate_put_delta_array(S, K, T, r, sigma)
     return {"spot_prices": spot_prices.tolist(), "put_prices": put_prices, "put_deltas": deltas}
+
+@api_router.get("/theta-call")
+async def call_theta_array(S: float, K: float, T: float, r: float, sigma: float):
+    times, call_prices, thetas = generate_call_theta_array(S, K, T, r, sigma)
+    return {"times": times.tolist(), "call_prices": call_prices, "call_thetas": thetas}
+
+@api_router.get("/theta-put")
+async def put_theta_array(S: float, K: float, T: float, r: float, sigma: float):
+    times, put_prices, thetas = generate_put_theta_array(S, K, T, r, sigma)
+    return {"times": times.tolist(), "put_prices": put_prices, "put_thetas": thetas}
 
 app.include_router(api_router)

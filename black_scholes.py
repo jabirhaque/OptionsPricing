@@ -48,15 +48,42 @@ def call_deltas(S, K, T, r, sigma):
 def put_deltas(S, K, T, r, sigma):
     return norm.cdf((math.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * math.sqrt(T))) - 1
 
-
-def generate_call_price_array(S, K, T, r, sigma):
+def generate_call_delta_array(S, K, T, r, sigma):
     spot_prices = np.linspace(0.5 * S, 1.5 * S, 100)
     call_prices = [black_scholes_call(spot_price, K, T, r, sigma) for spot_price in spot_prices]
     deltas = [call_deltas(spot_price, K, T, r, sigma) for spot_price in spot_prices]
     return spot_prices, call_prices, deltas
 
-def generate_put_price_array(S, K, T, r, sigma):
+def generate_put_delta_array(S, K, T, r, sigma):
     spot_prices = np.linspace(0.5 * S, 1.5 * S, 100)
     put_prices = [black_scholes_put(spot_price, K, T, r, sigma) for spot_price in spot_prices]
     deltas = [put_deltas(spot_price, K, T, r, sigma) for spot_price in spot_prices]
     return spot_prices, put_prices, deltas
+
+
+def call_theta(S, K, T, r, sigma):
+    d1 = (math.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * math.sqrt(T))
+    d2 = d1 - sigma * math.sqrt(T)
+    term1 = - (S * norm.pdf(d1) * sigma) / (2 * math.sqrt(T))
+    term2 = - r * K * math.exp(-r * T) * norm.cdf(d2)
+    return term1 + term2
+
+
+def put_theta(S, K, T, r, sigma):
+    d1 = (math.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * math.sqrt(T))
+    d2 = d1 - sigma * math.sqrt(T)
+    term1 = - (S * norm.pdf(d1) * sigma) / (2 * math.sqrt(T))
+    term2 = r * K * math.exp(-r * T) * norm.cdf(-d2)
+    return term1 + term2
+
+def generate_call_theta_array(S, K, T, r, sigma):
+    times = np.linspace(0.5 * T, 1.5 * T, 100)
+    call_prices = [black_scholes_call(S, K, time, r, sigma) for time in times]
+    thetas = [call_theta(S, K, time, r, sigma) for time in times]
+    return times, call_prices, thetas
+
+def generate_put_theta_array(S, K, T, r, sigma):
+    times = np.linspace(0.5 * T, 1.5 * T, 100)
+    call_prices = [black_scholes_call(S, K, time, r, sigma) for time in times]
+    thetas = [put_theta(S, K, time, r, sigma) for time in times]
+    return times, call_prices, thetas

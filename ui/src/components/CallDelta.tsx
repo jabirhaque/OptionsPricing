@@ -44,7 +44,7 @@ export default function CallDelta({ S, K, T, r, vol }: { S: number; K: number; T
         formatter: "{value}",
       },
       splitLine: {
-        show: false, // Hides horizontal grid lines for this y-axis
+        show: false,
       },
     },
     {
@@ -54,7 +54,7 @@ export default function CallDelta({ S, K, T, r, vol }: { S: number; K: number; T
         formatter: "{value}",
       },
       splitLine: {
-        show: false, // Hides horizontal grid lines for this y-axis
+        show: false,
       },
     },
   ],
@@ -73,5 +73,5 @@ export default function CallDelta({ S, K, T, r, vol }: { S: number; K: number; T
     ],
   };
 
-  return <ReactECharts option={options} style={{ height: "400px", width: "50%" }} />;
+  return <ReactECharts option={options} style={{ height: "400px", width: "33%" }} />;
 }

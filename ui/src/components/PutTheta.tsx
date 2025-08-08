@@ -1,8 +1,8 @@
 import ReactECharts from "echarts-for-react";
-import { useGetDeltaPutQuery } from "../features/api";
+import {useGetThetaPutQuery} from "../features/api";
 
-export default function PutDelta({ S, K, T, r, vol }: { S: number; K: number; T: number; r: number; vol: number}) {
-  const { data, isLoading, error } = useGetDeltaPutQuery({ S, K, T, r, sigma: vol });
+export default function PutTheta({ S, K, T, r, vol }: { S: number; K: number; T: number; r: number; vol: number}) {
+  const { data, isLoading, error } = useGetThetaPutQuery({ S, K, T, r, sigma: vol });
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -17,18 +17,18 @@ export default function PutDelta({ S, K, T, r, vol }: { S: number; K: number; T:
     trigger: "axis",
     formatter: (params: any) => {
       const [point] = params;
-      const spotPrice = parseFloat(point.axisValue).toFixed(2);
+      const time = parseFloat(point.axisValue).toFixed(2);
       const optionValue = parseFloat(point.data).toFixed(2);
-      const delta = data.put_deltas[point.dataIndex].toFixed(4);
-      return `Spot Price: ${spotPrice}<br>put Price: ${optionValue}<br>Delta: ${delta}`;
+      const theta = data.put_thetas[point.dataIndex].toFixed(4);
+      return `Time: ${time}<br>Put Price: ${optionValue}<br>Theta: ${theta}`;
     },
   },
     legend: {
-      data: ["Put Prices", "Put Deltas"],
+      data: ["Put Prices", "Put Thetas"],
     },
     xAxis: {
       type: "category",
-      data: data.spot_prices,
+      data: data.times,
       axisPointer: {
         type: "shadow",
       },
@@ -44,17 +44,17 @@ export default function PutDelta({ S, K, T, r, vol }: { S: number; K: number; T:
         formatter: "{value}",
       },
       splitLine: {
-        show: false, // Hides horizontal grid lines for this y-axis
+        show: false,
       },
     },
     {
       type: "value",
-      name: "Deltas",
+      name: "Thetas",
       axisLabel: {
         formatter: "{value}",
       },
       splitLine: {
-        show: false, // Hides horizontal grid lines for this y-axis
+        show: false,
       },
     },
   ],
@@ -65,10 +65,10 @@ export default function PutDelta({ S, K, T, r, vol }: { S: number; K: number; T:
         data: data.put_prices,
       },
       {
-        name: "Put Deltas",
+        name: "Put Thetas",
         type: "line",
         yAxisIndex: 1,
-        data: data.put_deltas,
+        data: data.put_thetas,
       },
     ],
   };
