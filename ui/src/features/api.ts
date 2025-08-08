@@ -41,6 +41,20 @@ export const api = createApi({
             query: ({ S, K, T, r, sigma }) =>
                 `delta-put?S=${S}&K=${K}&T=${T}&r=${r}&sigma=${sigma}`,
         }),
+        getThetaCall: builder.query<
+            { times: number[]; call_prices: number[]; call_thetas: number[]},
+            { S: number; K: number; T: number; r: number; sigma: number }
+        >({
+            query: ({ S, K, T, r, sigma }) =>
+                `theta-call?S=${S}&K=${K}&T=${T}&r=${r}&sigma=${sigma}`,
+        }),
+        getThetaPut: builder.query<
+            { times: number[]; put_prices: number[]; put_thetas:number[]},
+            { S: number; K: number; T: number; r: number; sigma: number }
+        >({
+            query: ({ S, K, T, r, sigma }) =>
+                `theta-put?S=${S}&K=${K}&T=${T}&r=${r}&sigma=${sigma}`,
+        }),
     }),
 });
 
@@ -50,5 +64,7 @@ export const {
     useGetCallOptionMatrixQuery,
     useGetPutOptionMatrixQuery,
     useGetDeltaCallQuery,
-    useGetDeltaPutQuery
+    useGetDeltaPutQuery,
+    useGetThetaCallQuery,
+    useGetThetaPutQuery
 } = api;
