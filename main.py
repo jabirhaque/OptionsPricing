@@ -87,4 +87,14 @@ async def call_vega_array(S: float, K: float, T: float, r: float, sigma: float):
 async def put_vega_array(S: float, K: float, T: float, r: float, sigma: float):
     sigmas, put_prices, vegas = generate_put_vega_array(S, K, T, r, sigma)
     return {"sigmas": sigmas.tolist(), "put_prices": put_prices, "put_vegas": vegas}
+
+@api_router.get("/rho-call")
+async def call_rho_array(S: float, K: float, T: float, r: float, sigma: float):
+    rates, call_prices, rhos = generate_call_rho_array(S, K, T, r, sigma)
+    return {"rates": rates.tolist(), "call_prices": call_prices, "call_rhos": rhos}
+
+@api_router.get("/rho-put")
+async def put_rho_array(S: float, K: float, T: float, r: float, sigma: float):
+    rates, put_prices, rhos = generate_put_rho_array(S, K, T, r, sigma)
+    return {"rates": rates.tolist(), "put_prices": put_prices, "put_rhos": rhos}
 app.include_router(api_router)

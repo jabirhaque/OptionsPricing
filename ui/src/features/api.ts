@@ -69,6 +69,20 @@ export const api = createApi({
             query: ({ S, K, T, r, sigma }) =>
                 `vega-put?S=${S}&K=${K}&T=${T}&r=${r}&sigma=${sigma}`,
         }),
+        getRhoCall: builder.query<
+            { rates: number[]; call_prices: number[]; call_rhos: number[]},
+            { S: number; K: number; T: number; r: number; sigma: number }
+        >({
+            query: ({ S, K, T, r, sigma }) =>
+                `rho-call?S=${S}&K=${K}&T=${T}&r=${r}&sigma=${sigma}`,
+        }),
+        getRhoPut: builder.query<
+            { rates: number[]; put_prices: number[]; put_rhos:number[]},
+            { S: number; K: number; T: number; r: number; sigma: number }
+        >({
+            query: ({ S, K, T, r, sigma }) =>
+                `rho-put?S=${S}&K=${K}&T=${T}&r=${r}&sigma=${sigma}`,
+        }),
     }),
 });
 
@@ -82,5 +96,7 @@ export const {
     useGetThetaCallQuery,
     useGetThetaPutQuery,
     useGetVegaCallQuery,
-    useGetVegaPutQuery
+    useGetVegaPutQuery,
+    useGetRhoCallQuery,
+    useGetRhoPutQuery
 } = api;

@@ -68,7 +68,6 @@ def call_theta(S, K, T, r, sigma):
     term2 = - r * K * math.exp(-r * T) * norm.cdf(d2)
     return term1 + term2
 
-
 def put_theta(S, K, T, r, sigma):
     d1 = (math.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * math.sqrt(T))
     d2 = d1 - sigma * math.sqrt(T)
@@ -84,9 +83,9 @@ def generate_call_theta_array(S, K, T, r, sigma):
 
 def generate_put_theta_array(S, K, T, r, sigma):
     times = np.linspace(0.5 * T, 1.5 * T, 100)
-    call_prices = [black_scholes_call(S, K, time, r, sigma) for time in times]
+    put_prices = [black_scholes_put(S, K, time, r, sigma) for time in times]
     thetas = [put_theta(S, K, time, r, sigma) for time in times]
-    return times, call_prices, thetas
+    return times, put_prices, thetas
 
 def vega(S, K, T, r, sigma):
     d1 = (math.log(S / K) + (r + 0.5 * sigma**2) * T) / (sigma * math.sqrt(T))
@@ -103,3 +102,25 @@ def generate_put_vega_array(S, K, T, r, sigma):
     put_prices = [black_scholes_put(S, K, T, r, s) for s in sigmas]
     vegas = [vega(S, K, T, r, s) for s in sigmas]
     return sigmas, put_prices, vegas
+
+def call_rho(S, K, T, r, sigma):
+    d1 = (math.log(S / K) + (r + 0.5 * sigma**2) * T) / (sigma * math.sqrt(T))
+    d2 = d1 - sigma * math.sqrt(T)
+    return K * T * math.exp(-r * T) * norm.cdf(d2) / 100
+
+def put_rho(S, K, T, r, sigma):
+    d1 = (math.log(S / K) + (r + 0.5 * sigma**2) * T) / (sigma * math.sqrt(T))
+    d2 = d1 - sigma * math.sqrt(T)
+    return -K * T * math.exp(-r * T) * norm.cdf(-d2) / 100
+
+def generate_call_rho_array(S, K, T, r, sigma):
+    rates = np.linspace(0.5 * r, 1.5 * r, 100)
+    call_prices = [black_scholes_call(S, K, T, rate, sigma) for rate in rates]
+    rhos = [call_rho(S, K, T, rate, sigma) for rate in rates]
+    return rates, call_prices, rhos
+
+def generate_put_rho_array(S, K, T, r, sigma):
+    rates = np.linspace(0.5 * r, 1.5 * r, 100)
+    put_prices = [black_scholes_put(S, K, T, rate, sigma) for rate in rates]
+    rhos = [put_rho(S, K, T, rate, sigma) for rate in rates]
+    return rates, put_prices, rhos

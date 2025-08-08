@@ -7,6 +7,8 @@ import CallTheta from "./CallTheta.tsx";
 import PutTheta from "./PutTheta.tsx";
 import CallVega from "./CallVega.tsx";
 import PutVega from "./PutVega.tsx";
+import CallRho from "./CallRho.tsx";
+import PutRho from "./PutRho.tsx";
 
 export default function OptionsPrices({ inputs }: { inputs: any }) {
   const { data: callData, error: callError, isLoading: isCallLoading } = useGetCallOptionQuery(inputs);
@@ -78,6 +80,9 @@ export default function OptionsPrices({ inputs }: { inputs: any }) {
                 <CallTheta S={inputs.S} K={inputs.K} T={inputs.T} r={inputs.r} vol={inputs.sigma}/>
                 <CallVega S={inputs.S} K={inputs.K} T={inputs.T} r={inputs.r} vol={inputs.sigma}/>
             </div>
+            <div style={{display: "flex", gap: "10px"}}>
+                <CallRho S={inputs.S} K={inputs.K} T={inputs.T} r={inputs.r} vol={inputs.sigma}/>
+            </div>
             <div style={{display: "flex", justifyContent: "center", marginBottom: "10px"}}>
                 <Typography variant="h6">Put Price Heatmap</Typography>
             </div>
@@ -96,6 +101,9 @@ export default function OptionsPrices({ inputs }: { inputs: any }) {
                 <PutDelta S={inputs.S} K={inputs.K} T={inputs.T} r={inputs.r} vol={inputs.sigma}/>
                 <PutTheta S={inputs.S} K={inputs.K} T={inputs.T} r={inputs.r} vol={inputs.sigma}/>
                 <PutVega S={inputs.S} K={inputs.K} T={inputs.T} r={inputs.r} vol={inputs.sigma}/>
+            </div>
+            <div style={{display: "flex", gap: "10px"}}>
+                <PutRho S={inputs.S} K={inputs.K} T={inputs.T} r={inputs.r} vol={inputs.sigma}/>
             </div>
         </div>
     </div>
