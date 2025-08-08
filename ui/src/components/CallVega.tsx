@@ -1,8 +1,8 @@
 import ReactECharts from "echarts-for-react";
-import { useGetDeltaPutQuery } from "../features/api";
+import { useGetVegaCallQuery } from "../features/api";
 
-export default function PutDelta({ S, K, T, r, vol }: { S: number; K: number; T: number; r: number; vol: number}) {
-  const { data, isLoading, error } = useGetDeltaPutQuery({ S, K, T, r, sigma: vol });
+export default function CallVega({ S, K, T, r, vol }: { S: number; K: number; T: number; r: number; vol: number}) {
+  const { data, isLoading, error } = useGetVegaCallQuery({ S, K, T, r, sigma: vol });
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -17,18 +17,18 @@ export default function PutDelta({ S, K, T, r, vol }: { S: number; K: number; T:
     trigger: "axis",
     formatter: (params: any) => {
       const [point] = params;
-      const spotPrice = parseFloat(point.axisValue).toFixed(2);
+      const sigma = parseFloat(point.axisValue).toFixed(2);
       const optionValue = parseFloat(point.data).toFixed(2);
-      const delta = data.put_deltas[point.dataIndex].toFixed(4);
-      return `Spot Price: ${spotPrice}<br>Put Price: ${optionValue}<br>Delta: ${delta}`;
+      const vega = data.call_vegas[point.dataIndex].toFixed(4);
+      return `Volatility: ${sigma}<br>Call Price: ${optionValue}<br>Vega: ${vega}`;
     },
   },
     legend: {
-      data: ["Put Prices", "Put Deltas"],
+      data: ["Call Prices", "Call Vegas"],
     },
     xAxis: {
       type: "category",
-      data: data.spot_prices,
+      data: data.sigmas,
       axisPointer: {
         type: "shadow",
       },
@@ -44,31 +44,31 @@ export default function PutDelta({ S, K, T, r, vol }: { S: number; K: number; T:
         formatter: "{value}",
       },
       splitLine: {
-        show: false, // Hides horizontal grid lines for this y-axis
+        show: false,
       },
     },
     {
       type: "value",
-      name: "Deltas",
+      name: "Vegas",
       axisLabel: {
         formatter: "{value}",
       },
       splitLine: {
-        show: false, // Hides horizontal grid lines for this y-axis
+        show: false,
       },
     },
   ],
     series: [
       {
-        name: "Put Prices",
+        name: "Call Prices",
         type: "line",
-        data: data.put_prices,
+        data: data.call_prices,
       },
       {
-        name: "Put Deltas",
+        name: "Call Vegas",
         type: "line",
         yAxisIndex: 1,
-        data: data.put_deltas,
+        data: data.call_vegas,
       },
     ],
   };
