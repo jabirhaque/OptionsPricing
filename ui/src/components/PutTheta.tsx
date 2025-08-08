@@ -17,7 +17,7 @@ export default function PutTheta({ S, K, T, r, vol }: { S: number; K: number; T:
     trigger: "axis",
     formatter: (params: any) => {
       const [point] = params;
-      const time = parseFloat(point.axisValue).toFixed(2);
+      const time = parseFloat(point.axisValue).toFixed(4);
       const optionValue = parseFloat(point.data).toFixed(2);
       const theta = data.put_thetas[point.dataIndex].toFixed(4);
       return `Time: ${time}<br>Put Price: ${optionValue}<br>Theta: ${theta}`;

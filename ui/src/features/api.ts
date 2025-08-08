@@ -97,6 +97,13 @@ export const api = createApi({
             query: ({ S, K, T, r, sigma }) =>
                 `gamma-put?S=${S}&K=${K}&T=${T}&r=${r}&sigma=${sigma}`,
         }),
+        getVomma: builder.query<
+            { sigmas: number[]; vegas: number[]; vommas: number[]},
+            { S: number; K: number; T: number; r: number; sigma: number }
+        >({
+            query: ({ S, K, T, r, sigma }) =>
+                `vomma?S=${S}&K=${K}&T=${T}&r=${r}&sigma=${sigma}`,
+        }),
     }),
 });
 
@@ -114,5 +121,6 @@ export const {
     useGetRhoCallQuery,
     useGetRhoPutQuery,
     useGetGammaCallQuery,
-    useGetGammaPutQuery
+    useGetGammaPutQuery,
+    useGetVommaQuery
 } = api;

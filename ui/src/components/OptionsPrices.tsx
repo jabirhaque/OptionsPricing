@@ -11,6 +11,7 @@ import CallRho from "./CallRho.tsx";
 import PutRho from "./PutRho.tsx";
 import CallGamma from "./CallGamma.tsx";
 import PutGamma from "./PutGamma.tsx";
+import Vomma from "./Vomma.tsx";
 
 export default function OptionsPrices({ inputs }: { inputs: any }) {
   const { data: callData, error: callError, isLoading: isCallLoading } = useGetCallOptionQuery(inputs);
@@ -85,6 +86,7 @@ export default function OptionsPrices({ inputs }: { inputs: any }) {
             <div style={{display: "flex", gap: "10px"}}>
                 <CallRho S={inputs.S} K={inputs.K} T={inputs.T} r={inputs.r} vol={inputs.sigma}/>
                 <CallGamma S={inputs.S} K={inputs.K} T={inputs.T} r={inputs.r} vol={inputs.sigma}/>
+                <Vomma S={inputs.S} K={inputs.K} T={inputs.T} r={inputs.r} vol={inputs.sigma}/>
             </div>
             <div style={{display: "flex", justifyContent: "center", marginBottom: "10px"}}>
                 <Typography variant="h6">Put Price Heatmap</Typography>
@@ -108,6 +110,7 @@ export default function OptionsPrices({ inputs }: { inputs: any }) {
             <div style={{display: "flex", gap: "10px"}}>
                 <PutRho S={inputs.S} K={inputs.K} T={inputs.T} r={inputs.r} vol={inputs.sigma}/>
                 <PutGamma S={inputs.S} K={inputs.K} T={inputs.T} r={inputs.r} vol={inputs.sigma}/>
+                <Vomma S={inputs.S} K={inputs.K} T={inputs.T} r={inputs.r} vol={inputs.sigma}/>
             </div>
         </div>
     </div>

@@ -44,7 +44,7 @@ export default function PutDelta({ S, K, T, r, vol }: { S: number; K: number; T:
         formatter: "{value}",
       },
       splitLine: {
-        show: false, // Hides horizontal grid lines for this y-axis
+        show: false,
       },
     },
     {
@@ -54,7 +54,7 @@ export default function PutDelta({ S, K, T, r, vol }: { S: number; K: number; T:
         formatter: "{value}",
       },
       splitLine: {
-        show: false, // Hides horizontal grid lines for this y-axis
+        show: false,
       },
     },
   ],

@@ -1,8 +1,8 @@
 import ReactECharts from "echarts-for-react";
-import { useGetVegaPutQuery } from "../features/api";
+import {useGetVommaQuery} from "../features/api";
 
-export default function PutVega({ S, K, T, r, vol }: { S: number; K: number; T: number; r: number; vol: number}) {
-  const { data, isLoading, error } = useGetVegaPutQuery({ S, K, T, r, sigma: vol });
+export default function Vomma({ S, K, T, r, vol }: { S: number; K: number; T: number; r: number; vol: number}) {
+  const { data, isLoading, error } = useGetVommaQuery({ S, K, T, r, sigma: vol });
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -18,13 +18,13 @@ export default function PutVega({ S, K, T, r, vol }: { S: number; K: number; T: 
     formatter: (params: any) => {
       const [point] = params;
       const sigma = parseFloat(point.axisValue).toFixed(4);
-      const optionValue = parseFloat(point.data).toFixed(2);
-      const vega = data.put_vegas[point.dataIndex].toFixed(4);
-      return `Volatility: ${sigma}<br>Put Price: ${optionValue}<br>Vega: ${vega}`;
+      const vega = parseFloat(point.data).toFixed(4);
+      const vomma = data.vommas[point.dataIndex].toFixed(4);
+      return `Volatility: ${sigma}<br>Vega: ${vega}<br>Vomma: ${vomma}`;
     },
   },
     legend: {
-      data: ["Put Prices", "Put Vegas"],
+      data: ["Vegas", "Vommas"],
     },
     xAxis: {
       type: "category",
@@ -39,7 +39,7 @@ export default function PutVega({ S, K, T, r, vol }: { S: number; K: number; T: 
     yAxis: [
     {
       type: "value",
-      name: "Prices",
+      name: "Vegas",
       axisLabel: {
         formatter: "{value}",
       },
@@ -49,7 +49,7 @@ export default function PutVega({ S, K, T, r, vol }: { S: number; K: number; T: 
     },
     {
       type: "value",
-      name: "Vegas",
+      name: "Vommas",
       axisLabel: {
         formatter: "{value}",
       },
@@ -60,15 +60,15 @@ export default function PutVega({ S, K, T, r, vol }: { S: number; K: number; T: 
   ],
     series: [
       {
-        name: "Put Prices",
+        name: "Vegas",
         type: "line",
-        data: data.put_prices,
+        data: data.vegas,
       },
       {
-        name: "Put Vegas",
+        name: "Vommas",
         type: "line",
         yAxisIndex: 1,
-        data: data.put_vegas,
+        data: data.vommas,
       },
     ],
   };

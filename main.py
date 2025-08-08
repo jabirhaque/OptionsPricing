@@ -107,4 +107,10 @@ async def call_gamma_array(S: float, K: float, T: float, r: float, sigma: float)
 async def put_gamma_array(S: float, K: float, T: float, r: float, sigma: float):
     spot_prices, deltas, gammas = generate_put_gamma_array(S, K, T, r, sigma)
     return {"spot_prices": spot_prices.tolist(), "put_deltas": deltas, "put_gammas": gammas}
+
+@api_router.get("/vomma")
+async def vomma_array(S: float, K: float, T: float, r: float, sigma: float):
+    sigmas, vegas, vommas = generate_vomma_array(S, K, T, r, sigma)
+    return {"sigmas": sigmas.tolist(), "vegas": vegas, "vommas": vommas}
+
 app.include_router(api_router)
